@@ -1,53 +1,31 @@
 import React from 'react'
-import Card from './components/Card'
+import Ex from './components/Ex'
+import axios from 'axios'
+import { useState } from 'react'
 const App = () => {
 
-const user=[
-  {
-    "name": "Aarav Sharma",
-    "age": 28,
-    "profession": "Software Engineer",
-    "city": "Bengaluru",
-    "profilePhoto": "https://example.com/profiles/aarav.jpg"
-  },
-  {
-    "name": "Priya Mehta",
-    "age": 32,
-    "profession": "Graphic Designer",
-    "city": "Mumbai",
-    "profilePhoto": "https://example.com/profiles/priya.jpg"
-  },
-  {
-    "name": "Rohan Verma",
-    "age": 25,
-    "profession": "Data Analyst",
-    "city": "Delhi",
-    "profilePhoto": "https://example.com/profiles/rohan.jpg"
-  },
-  {
-    "name": "Sneha Kapoor",
-    "age": 30,
-    "profession": "Marketing Manager",
-    "city": "Hyderabad",
-    "profilePhoto": "https://example.com/profiles/sneha.jpg"
-  },
-  {
-    "name": "Vikram Singh",
-    "age": 35,
-    "profession": "Photographer",
-    "city": "Jaipur",
-    "profilePhoto": "https://example.com/profiles/vikram.jpg"
+const[data , setData]= useState([])
+
+  const getData= async ()=>{
+  const response= await axios.get('https://picsum.photos/v2/list?page=2&limit=100')
+ 
+  setData(response.data)
+  console.log(data[0].download_url)
   }
-]
+
 
   return (
     <div className='p-10'>
-      {user.map(function(elem, idx){
-       return <Card key={idx} username={elem.name} age={elem.age} city={elem.city} profession={elem.profession} profilePhoto={elem.profilePhoto}/>
-      })}
-
-      
-
+     <button onClick={getData}  className='bg-emerald-600 text-white px-4 py-2 text-2xl rounded font-medium active:scale-90'>Get Data</button>
+   <div className='p-5 bg-gray-900'>hello
+   {data.map(function(elem , idx){
+   return 
+   <div key={idx} className= 'bg-gray-800 justify-between w-full px-7 py-6 rounded mb-3'>
+    <img className='h-40' src={elem.download_url} alt=""/>
+     </div>  
+   }
+   )}
+   </div>
     </div>
   )
 }
